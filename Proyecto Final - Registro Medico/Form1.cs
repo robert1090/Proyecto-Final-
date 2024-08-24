@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -182,61 +184,121 @@ namespace Proyecto_Final___Registro_Medico
         public void Editar()
         {
 
-            Leer = new StreamReader("Registro.txt", true);
+            string [] Lineas = File.ReadAllLines("Registro.txt");
             
-            string Linea;
-            string ViejoNombre = BuscarBOX.Text;
+            List<string> nuevoarchivo = new List<string>();
 
-            while (!Leer.EndOfStream)
+            string ViejoNombre = NombreBOX.Text;
+
+            bool Edad = false, Sexo = false, Sangre = false, Diag = false, Practicas = false, Residencia = false, Telefono = false, Observacion = false, encontrado = false;
+
+            foreach (string linea in Lineas) 
             {
 
-                Linea = Leer.ReadLine();
-
-                if (Linea.Contains("Nombre del Paciente: " + ViejoNombre))
+                if (linea.Equals("Nombre del Paciente: " + ViejoNombre))
                 {
 
-                    Leer.Close();
-
-                    Escribir = new StreamWriter("Registro.txt", false);
-
-                    ViejoNombre = Linea;
-                    ViejoNombre = ViejoNombre.Replace("Nombre del Paciente: ", "");
-
-                    Escribir.WriteLine("Nombre del Paciente: " + NombreBOX.Text);
-
-                    Escribir.WriteLine("Edad: " + EdadBOX.Text);
-
-                    Escribir.WriteLine("Sexo: " + SexoBOX.Text);
-
-                    Escribir.WriteLine("Tipo de Sangre: " + SangreBOX.Text);
-
-                    Escribir.WriteLine("Diagnostico: " + DiagBOX.Text);
-
-                    Escribir.WriteLine("Practicas a Realizar: " + PracticaBOX.Text);
-
-                    Escribir.WriteLine("Residencia: " + ResidenciaBOX.Text);
-
-                    Escribir.WriteLine("Telefono: " + TelefonoBOX.Text);
-
-                    Escribir.WriteLine("Observaciones: " + ObservacionBOX.Text);
-
-                    Escribir.WriteLine();
-
-                    Escribir.Close();
-
-                    DialogResult result = MessageBox.Show(
-                        "Se a Editado los Datos del Paciente: " + ViejoNombre,
-                        ViejoNombre,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-
-                    break;
+                    nuevoarchivo.Add("Nombre del Paciente: " + NombreBOX.Text);
+                    Edad = true;
+                    encontrado = true;
+                    continue;
 
                 }
+
+                if (Edad == true)
+                {
+
+                    nuevoarchivo.Add("Edad: " + EdadBOX.Text);
+                    Edad = false;
+                    Sexo = true;
+                    continue;
+
+                }
+
+                if (Sexo == true)
+                {
+
+                    nuevoarchivo.Add("Sexo: " + SexoBOX.Text);
+                    Sexo = false;
+                    Sangre = true;
+                    continue;
+
+                }
+
+                if (Sangre == true)
+                {
+
+                    nuevoarchivo.Add("Tipo de Sangre: " + SangreBOX.Text);
+                    Sangre = false;
+                    Diag = true;
+                    continue;
+
+                }
+
+                if (Diag == true)
+                {
+
+                    nuevoarchivo.Add("Diagnostico: " + DiagBOX.Text);
+                    Diag = false;
+                    Practicas = true;
+                    continue;
+
+                }
+
+                if (Practicas == true)
+                {
+
+                    nuevoarchivo.Add("Practicas a Realizar: " + PracticaBOX.Text);
+                    Practicas = false;
+                    Residencia = true;
+                    continue;
+
+                }
+
+                if (Residencia == true)
+                {
+
+                    nuevoarchivo.Add("Residencia: " + ResidenciaBOX.Text);
+                    Residencia = false;
+                    Telefono = true;
+                    continue;
+
+                }
+
+                if (Telefono == true)
+                {
+
+                    nuevoarchivo.Add("Telefono: " + TelefonoBOX.Text);
+                    Telefono = false;
+                    Observacion = true;
+                    continue;
+                }
+
+                if (Observacion == true)
+                {
+
+                    nuevoarchivo.Add("Observaciones: " + ObservacionBOX.Text);
+                    Observacion = false;
+                    encontrado = false;
+                    continue;
+
+                }
+
+                if(encontrado == false)
+                {
+                    nuevoarchivo.Add(linea);
+                 
+                }
+
             }
 
-            Leer.Close();
-            Escribir.Close();
+            File.WriteAllLines("Registro.txt", nuevoarchivo);
+
+            DialogResult result = MessageBox.Show(
+                "Se a Editado los Datos del Paciente: " + ViejoNombre,
+                ViejoNombre,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
 
         }
 
@@ -245,13 +307,14 @@ namespace Proyecto_Final___Registro_Medico
 
             Leer = new StreamReader("Registro.txt", true);
             string Linea;
+            
 
             while (!Leer.EndOfStream)
             {
 
                 Linea = Leer.ReadLine();
 
-                if (Linea.Contains("Nombre del Paciente: " + BuscarBOX.Text))
+                if (Linea.Equals("Nombre del Paciente: " + BuscarBOX.Text))
                 {
 
                     Linea = Linea.Replace("Nombre del Paciente: ", "");
@@ -292,7 +355,7 @@ namespace Proyecto_Final___Registro_Medico
                     break;
 
                 }
-                if (Leer.EndOfStream && !Linea.Contains(BuscarBOX.Text))
+                if (Leer.EndOfStream && !Linea.Equals("Nombre del Paciente: " + BuscarBOX.Text))
                 {
                     DialogResult result = MessageBox.Show(
                         "No se a encontrado ningun paciente con el nombre de: " + BuscarBOX.Text,
@@ -300,9 +363,10 @@ namespace Proyecto_Final___Registro_Medico
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                 }
+
             }
 
-            Leer.Close ();
+            Leer.Close();
 
         }
 
