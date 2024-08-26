@@ -143,12 +143,6 @@ namespace Proyecto_Final___Registro_Medico
             TelefonoBOX.Text = "";
             ObservacionBOX.Text = "";
 
-            DialogResult result = MessageBox.Show(
-                "Se han limpiado las casillas",
-                "",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-
         }
 
         /// <summary>
@@ -553,6 +547,13 @@ namespace Proyecto_Final___Registro_Medico
         public void BTNLimpiar_Click(object sender, EventArgs e)
         {
             Limpiar();
+
+            DialogResult result = MessageBox.Show(
+                "Se han limpiado las casillas",
+                "",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
         }
 
         /// <summary>
@@ -580,4 +581,11 @@ namespace Proyecto_Final___Registro_Medico
             Limpiar();
         }
     }
+
+    //Integrantes del Grupo:
+    //Robert Avila 23-SISN-2-001
+    //Joan Santos Mercedes 22-SISN-2-028
+    //Eliann Hernandez 23-SISN-2-022
+    //Yamelin Lopez 23-SISN-2-037 
+
 }
