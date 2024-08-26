@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ListaPacientes = new System.Windows.Forms.DataGridView();
             this.BTNGuardar = new System.Windows.Forms.Button();
             this.BTNLimpiar = new System.Windows.Forms.Button();
@@ -60,6 +61,7 @@
             // 
             // ListaPacientes
             // 
+            this.ListaPacientes.BackgroundColor = System.Drawing.Color.Silver;
             this.ListaPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ListaPacientes.Location = new System.Drawing.Point(21, 238);
             this.ListaPacientes.Name = "ListaPacientes";
@@ -308,7 +310,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1050, 580);
             this.Controls.Add(this.NombreBuscar);
             this.Controls.Add(this.BuscarBOX);
@@ -337,6 +340,8 @@
             this.Controls.Add(this.BTNLimpiar);
             this.Controls.Add(this.BTNGuardar);
             this.Controls.Add(this.ListaPacientes);
+            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.ListaPacientes)).EndInit();

@@ -16,9 +16,19 @@ namespace Proyecto_Final___Registro_Medico
 {
     public partial class Form1 : Form
     {
+
+        /// <summary>
+        /// Iniciamos la Tabla de Datos y las funciones de Leer y Escribir el archivo.txt.
+        /// </summary>
+        
         DataTable Tabla;
         static StreamReader Leer;
         static StreamWriter Escribir;        
+
+
+        /// <summary>
+        /// Creamos la Estructura de Datos que se utilizaran.
+        /// </summary>
 
         public struct Pacientes
         {
@@ -33,12 +43,20 @@ namespace Proyecto_Final___Registro_Medico
             public string Observacion { get; set; }
         }
         
+        /// <summary>
+        /// Funcion que inicia el programa en general.
+        /// </summary>
+
         public Form1()
         {
             InitializeComponent();
             Iniciar();
             Consultar();
         }
+
+        /// <summary>
+        /// Funcion de iniciar que crea el archivo.txt si no esta creado e inicializa la tabla de datos.
+        /// </summary>
 
         public void Iniciar()
         {
@@ -60,6 +78,10 @@ namespace Proyecto_Final___Registro_Medico
             Tabla.Columns.Add("Observacion");
             ListaPacientes.DataSource = Tabla;
         }
+
+        /// <summary>
+        /// Funcion de guardar, que guarda los datos gracias a la estructura y esta la aloja en el archivo.txt.
+        /// </summary>
 
         public void Guardar()
         {
@@ -97,7 +119,17 @@ namespace Proyecto_Final___Registro_Medico
             Escribir.WriteLine();
             Escribir.Close();
 
+            DialogResult result = MessageBox.Show(
+                "Se a guardado la informacion del Paciente: " + NombreBOX.Text,
+                "",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
         }
+
+        /// <summary>
+        /// Funcion de limpiar las casillas de datos, no la tabla de datos.
+        /// </summary>
 
         public void Limpiar()
         {
@@ -110,7 +142,18 @@ namespace Proyecto_Final___Registro_Medico
             ResidenciaBOX.Text = "";
             TelefonoBOX.Text = "";
             ObservacionBOX.Text = "";
+
+            DialogResult result = MessageBox.Show(
+                "Se han limpiado las casillas",
+                "",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
         }
+
+        /// <summary>
+        /// Funcion que lee y presenta los datos del archivo.txt en la tabla de datos.
+        /// </summary>
 
         public void Consultar()
         {
@@ -180,6 +223,11 @@ namespace Proyecto_Final___Registro_Medico
             Leer.Close();
 
         }
+
+        /// <summary>
+        /// Funcion que edita los datos buscados, ingresa los datos que no se editaran en una lista y los que se modificaran los reemplazan por los nuevos datos
+        /// para a continuacion guardar todos estos datos en el archivo.txt sin cambiar alterar el orden o los datos que no se tenian que modificar.
+        /// </summary>
 
         public void Editar()
         {
@@ -302,6 +350,10 @@ namespace Proyecto_Final___Registro_Medico
 
         }
 
+        /// <summary>
+        /// Funcion que busca los datos deseados, luego los coloca en las casillas para poder observarlos o modificarlos.
+        /// </summary>
+
         public void Buscar()
         {
 
@@ -352,6 +404,12 @@ namespace Proyecto_Final___Registro_Medico
                     Linea = Linea.Replace("Observaciones: ", "");
                     ObservacionBOX.Text = Linea;
 
+                    DialogResult result = MessageBox.Show(
+                        "Se han encontrado los Datos del Paciente: " + NombreBOX.Text,
+                        "",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
                     break;
 
                 }
@@ -370,6 +428,12 @@ namespace Proyecto_Final___Registro_Medico
 
         }
 
+        /// <summary>
+        /// Funcion de salir
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         public void BTNSalir_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
@@ -383,6 +447,12 @@ namespace Proyecto_Final___Registro_Medico
             }
         }
 
+        /// <summary>
+        /// Funcion que evitar ingresar numeros o caracteres especiales en la casilla de nombre.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         public void NombreBOX_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
@@ -390,6 +460,12 @@ namespace Proyecto_Final___Registro_Medico
                 e.Handled = true;
             }
         }
+
+        /// <summary>
+        /// Funcion que evita agregar letras o caracteres especiales en la casilla de edad.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         public void EdadBOX_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -399,6 +475,12 @@ namespace Proyecto_Final___Registro_Medico
             }
         }
 
+        /// <summary>
+        /// Funcion que evitar ingresar numeros o caracteres especiales en la casilla de Sexo.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         public void SexoBOX_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
@@ -406,6 +488,12 @@ namespace Proyecto_Final___Registro_Medico
                 e.Handled = true;
             }
         }
+
+        /// <summary>
+        /// Funcion que evitar ingresar numeros en la casilla de Sangre.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         public void SangreBOX_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -415,6 +503,12 @@ namespace Proyecto_Final___Registro_Medico
             }
         }
 
+        /// <summary>
+        /// Funcion que evita agregar letras o caracteres especiales en la casilla de Telefono.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         public void TelefonoBOX_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
@@ -422,6 +516,12 @@ namespace Proyecto_Final___Registro_Medico
                 e.Handled = true;
             }
         }
+
+        /// <summary>
+        /// Funcion que evitar ingresar numeros o caracteres especiales en la casilla de Buscar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         public void BuscarBOX_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -431,6 +531,12 @@ namespace Proyecto_Final___Registro_Medico
             }
         }
 
+        /// <summary>
+        /// Funcion que al presionar el Boton Guardar llama a las funciones Guardar, Consultar y Limpiar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         public void BTNGuardar_Click(object sender, EventArgs e)
         {
             Guardar();
@@ -438,16 +544,34 @@ namespace Proyecto_Final___Registro_Medico
             Limpiar();
         }
 
+        /// <summary>
+        /// Funcion que al presionar el Boton Limpiar llama a la funcion Limpiar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         public void BTNLimpiar_Click(object sender, EventArgs e)
         {
             Limpiar();
         }
+
+        /// <summary>
+        /// Funcion que al presionar el Boton Buscar llama a las funciones Buscar y Consultar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void BTNBuscar_Click(object sender, EventArgs e)
         {
             Buscar();
             Consultar();
         }
+
+        /// <summary>
+        /// Funcion que al presionar el Boton Editar llama a las funciones Editar, Consultar y Limpiar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void BTNEditar_Click(object sender, EventArgs e)
         {
